@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cloud Cannon Requirements</title>
+    <meta name="Description" content="U.S. Army Corps of Engineers St. Louis District Home Page" />
+    <link rel="stylesheet" href="../../css/body.css" />
+    <link rel="stylesheet" href="stylesheets/style.css" />
+    <link rel="stylesheet" href="../../css/breadcrumbs.css" />
+    <link rel="stylesheet" href="../../css/jumpMenu.css" />
+    <link rel="stylesheet" href="../../css/sidebar.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-moment@1.0.0"></script>
+    <script src="../../js/main.js"></script>
+</head>
+
+<body>
+    <div id="page-container">
+        <header id="header"></header>
+        <div class="page-wrap">
+            <div class="container-fluid">
+                <div id="breadcrumbs"></div>
+                <div class="page-content">
+                    <sidebar id="sidebar"></sidebar>
+                    <div id="topPane" class="col-md backend-cp-collapsible">
+                        <div class="box-usace">
+                            <h2 class="box-header-striped">
+                                <span class="titleLabel title">Cloud Cannon Requirements</span>
+                                <span class="rss"></span>
+                            </h2>
+                            <div class="box-content" style="background-color:white;margin:auto">
+                                <form id="dynamicForm" action="process_form.php" method="post">
+                                    <label for="swpa_scheduled_generation">SWPA’s Scheduled Generation: </label>
+                                    <input type="text" name="swpa_scheduled_generation" id="swpa_scheduled_generation"
+                                        required>
+                                    <br><br>
+                                    <label for="usace_maximum">USACE Maximum: </label>
+                                    <input type="text" name="usace_maximum" id="usace_maximum" required>
+                                    <br><br>
+                                    <label for="usace_minimum">USACE Minimum: </label>
+                                    <input type="text" name="usace_minimum" id="usace_minimum" required>
+                                    <br><br>
+                                    <label for="usace_target">USACE Target: </label>
+                                    <input type="text" name="usace_target" id="usace_target" required>
+                                    <br><br>
+                                    <label for="ismodified">Is Modified:</label>
+                                    <select name="ismodified" id="ismodified" required>
+                                        <option value="off">Off</option>
+                                        <option value="on">On</option>
+                                    </select>
+                                    <br><br>
+                                    <input type="submit" value="Submit"
+                                        style="background-color: darkblue; color: white;">
+                                </form>
+                                <span>Email is handled by PHP, no cloud option yet.</span>
+                                <span>No password protected for this app.</span>
+                                <h2>How to Use Cloud Cannon Requirements</h2>
+                                <img src='../../../images/icons/how_to_icon.png' width="100" height="100" alt="" />
+
+                                <span>1. Default (pre populated) values are from previous (yesterday) email sent</span>
+                                <span>2. Type in your input</span>
+                                <span>3. Select your target</span>
+                                <span>4. Select Is Modified "On" or "Off"</span>
+                                <span>5. Modified "Off" = first requirements email of the day</span>
+                                <span>6. Modified "On" = modified requirements which will append "[Updated]" to
+                                    the email's title</span>
+                                <span>7. Click "Submit" will save today's requirements to a JSON file and send
+                                    out email to SWPA</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <button id="returnTop" title="Return to Top of Page">Top</button>
+    </div>
+    <footer id="footer"></footer>
+    <script src="../../js/libraries/jQuery-3.3.6.min.js"></script>
+    <script>
+        // Function to format the current date
+        function formatDate() {
+            const now = new Date();
+            const month = now.getMonth() + 1; // getMonth() is zero-based
+            const day = now.getDate();
+            const year = now.getFullYear();
+            return `${month}/${day}/${year}`;
+        }
+
+        // Function to fetch and process data
+        async function fetchAndProcessData() {
+            try {
+                const response = await fetch('https://wm.mvs.ds.usace.army.mil/web_apps/cannon_requirements/public/json/form_data_cannon_requirements_test.json');
+                if (!response.ok) throw new Error('Network response was not ok ' + response.statusText);
+                const existingArray = await response.json();
+                if (!Array.isArray(existingArray)) throw new Error('JSON data is not an array');
+                if (existingArray.length === 0) {
+                    console.log('No entries found');
+                    return;
+                }
+                existingArray.sort((a, b) => new Date(a.datetime) - new Date(b.datetime));
+                const lastEntry = existingArray[existingArray.length - 1];
+                document.getElementById('swpa_scheduled_generation').value = lastEntry.swpa_scheduled_generation || '';
+                document.getElementById('usace_maximum').value = lastEntry.usace_maximum || '';
+                document.getElementById('usace_minimum').value = lastEntry.usace_minimum || '';
+                document.getElementById('usace_target').value = lastEntry.usace_target || '';
+                document.getElementById('ismodified').value = lastEntry.ismodified || 'off';
+            } catch (error) {
+                console.error('Error fetching or processing JSON data:', error);
+            }
+        }
+
+        // Execute when the DOM is fully loaded
+        document.addEventListener('DOMContentLoaded', () => {
+            const spanElement = document.querySelector('.titleLabel.title');
+            if (spanElement) {
+                spanElement.textContent += ' ' + formatDate();
+            }
+            fetchAndProcessData();
+        });
+
+        $(document).ready(function () {
+            $('#header').load('../../templates/DISTRICT.header.html');
+            $('#sidebar').load('../../templates/DISTRICT.sidebar.html');
+            $('#footer').load('../../templates/DISTRICT.footer.html');
+        });
+    </script>
+</body>
+
+</html>
