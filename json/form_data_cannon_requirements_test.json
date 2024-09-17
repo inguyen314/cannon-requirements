@@ -1,0 +1,66 @@
+[
+    {
+        "swpa_scheduled_generation": "50 MW (400 dsf)",
+        "usace_maximum": "900 MW (6000 dsf)",
+        "usace_minimum": "0 MW (0 dsf)",
+        "usace_target": "na",
+        "ismodified": "off",
+        "datetime": "2023-11-10 13:37:52"
+    },
+    {
+        "swpa_scheduled_generation": "50 MW (400 dsf)",
+        "usace_maximum": "900 MW (6000 dsf)",
+        "usace_minimum": "0 MW (0 dsf)",
+        "usace_target": "na",
+        "ismodified": "off",
+        "datetime": "2023-11-10 13:37:57"
+    },
+    {
+        "swpa_scheduled_generation": "60 MW (400 dsf)",
+        "usace_maximum": "900 MW (6000 dsf)",
+        "usace_minimum": "0 MW (0 dsf)",
+        "usace_target": "na",
+        "ismodified": "off",
+        "datetime": "2023-11-10 13:41:51"
+    },
+    {
+        "swpa_scheduled_generation": "60 MW (400 dsf)",
+        "usace_maximum": "900 MW (6000 dsf)",
+        "usace_minimum": "0 MW (0 dsf)",
+        "usace_target": "na",
+        "ismodified": "on",
+        "datetime": "2023-11-10 13:46:05"
+    },
+    {
+        "swpa_scheduled_generation": "10 MW (400 dsf)",
+        "usace_maximum": "10 MW (6000 dsf)",
+        "usace_minimum": "10 MW (0 dsf)",
+        "usace_target": "na",
+        "ismodified": "off",
+        "datetime": "2023-11-10 13:54:02"
+    },
+    {
+        "swpa_scheduled_generation": "10 MW (400 dsf)",
+        "usace_maximum": "100 MW (6000 dsf)",
+        "usace_minimum": "101 MW (0 dsf)",
+        "usace_target": "na",
+        "ismodified": "off",
+        "datetime": "2023-11-10 14:04:09"
+    },
+    {
+        "swpa_scheduled_generation": "0 MW (0 dsf)",
+        "usace_maximum": "900 MW (6000 dsf)",
+        "usace_minimum": "0 MW (0 dsf)",
+        "usace_target": "na",
+        "ismodified": "off",
+        "datetime": "2023-11-11 07:41:25"
+    },
+    {
+        "swpa_scheduled_generation": "0 MW (0 dsf)",
+        "usace_maximum": "900 MW (6000 dsf)",
+        "usace_minimum": "0 MW (0 dsf)",
+        "usace_target": "na",
+        "ismodified": "off",
+        "datetime": "2023-11-11 10:12:27"
+    }
+]
