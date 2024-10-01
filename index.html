@@ -33,27 +33,32 @@
                                 <span class="rss"></span>
                             </h2>
                             <div class="box-content" style="background-color:white;margin:auto">
-                                <form id="dynamicForm" action="process_form.php" method="post">
+                                <form id="dynamicForm" onsubmit="prepareEmail(event)">
                                     <label for="swpa_scheduled_generation">SWPA’s Scheduled Generation: </label>
                                     <input type="text" name="swpa_scheduled_generation" id="swpa_scheduled_generation"
                                         required>
                                     <br><br>
+
                                     <label for="usace_maximum">USACE Maximum: </label>
                                     <input type="text" name="usace_maximum" id="usace_maximum" required>
                                     <br><br>
+
                                     <label for="usace_minimum">USACE Minimum: </label>
                                     <input type="text" name="usace_minimum" id="usace_minimum" required>
                                     <br><br>
+
                                     <label for="usace_target">USACE Target: </label>
                                     <input type="text" name="usace_target" id="usace_target" required>
                                     <br><br>
+
                                     <label for="ismodified">Is Modified:</label>
                                     <select name="ismodified" id="ismodified" required>
                                         <option value="off">Off</option>
                                         <option value="on">On</option>
                                     </select>
                                     <br><br>
-                                    <input type="submit" value="Submit"
+
+                                    <input type="submit" value="Prepare Email"
                                         style="background-color: darkblue; color: white;">
                                 </form>
                                 <span>Email is handled by PHP, no cloud option yet.</span>
@@ -112,6 +117,43 @@
                 console.error('Error fetching or processing JSON data:', error);
             }
         }
+
+        function prepareEmail(event) {
+            // Prevent the form from submitting
+            event.preventDefault();
+
+            // Gather form data
+            const swpaScheduledGeneration = document.getElementById('swpa_scheduled_generation').value;
+            const usaceMaximum = document.getElementById('usace_maximum').value;
+            const usaceMinimum = document.getElementById('usace_minimum').value;
+            const usaceTarget = document.getElementById('usace_target').value;
+            const isModified = document.getElementById('ismodified').value;
+
+            // Get current date in MM/DD/YYYY format
+            const currentDate = new Date();
+            const options = { month: '2-digit', day: '2-digit', year: 'numeric' };
+            const formattedDate = currentDate.toLocaleDateString('en-US', options);
+
+            // Create the email subject
+            const subject = `Cannon Requirements ${formattedDate}`;
+
+            // Create the email body
+            const body = `SWPA’s Scheduled Generation: ${swpaScheduledGeneration}%0D%0A` +
+                `USACE Maximum: ${usaceMaximum}%0D%0A` +
+                `USACE Minimum: ${usaceMinimum}%0D%0A` +
+                `USACE Target: ${usaceTarget}%0D%0A` +
+                `Is Modified: ${isModified}`;
+
+            // Set the recipient email address
+            const to = 'ivan.h.nguyen@usace.army.mil';
+
+            // Create a mailto link
+            const mailtoLink = `mailto:${to}?subject=${encodeURIComponent(subject)}&body=${body}`;
+
+            // Open the mailto link in the default email client
+            window.location.href = mailtoLink;
+        }
+
 
         // Execute when the DOM is fully loaded
         document.addEventListener('DOMContentLoaded', () => {
