@@ -24,7 +24,7 @@ $datetime = date('m-d-Y H:i:s');
 <!--APP START-->
 <div class="box-usace">
 	<h2 class="box-header-striped">
-		<span class="titleLabel title">Cannon Requirements <?php echo $date_mdY; ?></span>
+		<span class="titleLabel title">Cannon Requirements <?php echo $date_mdY; ?> [DISCONTINUED]</span>
 		<span class="rss"></span>
 	</h2>
 </div>
