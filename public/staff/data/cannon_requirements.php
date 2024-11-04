@@ -147,3 +147,5 @@ $lastEntry = end($existingArray);
     </body>
 </html>
 <?php db_disconnect($db); ?>
+
+<script>alert("This Cannon Requirements verion was discontinued.");</script>
